@@ -2,11 +2,11 @@
 #include <utility>
 
 #include "kutil/assert.h"
-#include "kutil/heap_allocator.h"
 #include "kutil/vm_space.h"
 
 #include "frame_allocator.h"
 #include "io.h"
+#include "kernel_heap.h"
 #include "log.h"
 #include "page_manager.h"
 
@@ -17,13 +17,7 @@ using memory::kernel_offset;
 using memory::page_offset;
 
 kutil::vm_space g_kspace;
-kutil::heap_allocator g_kernel_heap;
 bool g_memory_initialized = false;
-
-void * operator new(size_t size)           { return g_kernel_heap.allocate(size); }
-void * operator new [] (size_t size)       { return g_kernel_heap.allocate(size); }
-void operator delete (void *p) noexcept    { return g_kernel_heap.free(p); }
-void operator delete [] (void *p) noexcept { return g_kernel_heap.free(p); }
 
 enum class efi_memory_type : uint32_t
 {

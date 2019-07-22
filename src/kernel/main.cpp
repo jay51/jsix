@@ -5,7 +5,6 @@
 
 #include "initrd/initrd.h"
 #include "kutil/assert.h"
-#include "kutil/heap_allocator.h"
 #include "kutil/vm_space.h"
 #include "apic.h"
 #include "block_device.h"
@@ -16,6 +15,7 @@
 #include "interrupts.h"
 #include "io.h"
 #include "kernel_args.h"
+#include "kernel_heap.h"
 #include "kernel_memory.h"
 #include "log.h"
 #include "objects/event.h"
@@ -31,8 +31,6 @@ extern "C" {
 }
 
 extern void __kernel_assert(const char *, unsigned, const char *);
-
-extern kutil::heap_allocator g_kernel_heap;
 
 class test_observer :
 	public kobject::observer

@@ -30,6 +30,7 @@ modules:
             - src/kernel/interrupts.cpp
             - src/kernel/interrupts.s
             - src/kernel/io.cpp
+            - src/kernel/kernel_heap.cpp
             - src/kernel/loader.s
             - src/kernel/log.cpp
             - src/kernel/main.cpp

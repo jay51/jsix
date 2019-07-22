@@ -1,12 +1,11 @@
-#include "kutil/heap_allocator.h"
 #include "cpu.h"
 #include "debug.h"
 #include "log.h"
+#include "kernel_heap.h"
 #include "process.h"
 #include "scheduler.h"
 
 extern "C" void task_fork_return_thunk();
-extern kutil::heap_allocator g_kernel_heap; // TODO: this is a bad hack to get access to the heap
 
 void
 process::exit(uint32_t code)
