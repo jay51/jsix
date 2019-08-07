@@ -69,16 +69,6 @@ process_log(const char *message)
 }
 
 j6_status_t
-process_pause()
-{
-	auto &s = scheduler::get();
-	auto *p = s.current();
-	p->wait_on_signal(-1ull);
-	s.schedule();
-	return j6_status_ok;
-}
-
-j6_status_t
 process_sleep(uint64_t til)
 {
 	auto &s = scheduler::get();

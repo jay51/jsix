@@ -230,13 +230,7 @@ void scheduler::prune(uint64_t now)
 
 			if (!(remove->flags && process_flags::running)) {
 				auto *parent = get_process_by_id(remove->ppid);
-				if (parent && parent->wake_on_child(remove)) {
-					m_blocked.remove(parent);
-					m_runlists[parent->priority].push_front(parent);
-					m_process_allocator.push(remove);
-				} else {
-					m_exited.push_back(remove);
-				}
+				m_exited.push_back(remove);
 			} else {
 				m_blocked.push_back(remove);
 			}
