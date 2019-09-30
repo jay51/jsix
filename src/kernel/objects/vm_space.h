@@ -1,13 +1,11 @@
 #pragma once
-/// \file vm_range.h
+/// \file vm_space.h
 /// Structure for tracking a range of virtual memory addresses
 
 #include <stdint.h>
 #include "kutil/allocator.h"
 #include "kutil/avl_tree.h"
 #include "kutil/slab_allocator.h"
-
-namespace kutil {
 
 enum class vm_state : uint8_t {
 	unknown,
@@ -76,9 +74,7 @@ private:
 	node_type * split_out(node_type* node, uintptr_t start, size_t size, vm_state state);
 	node_type * consolidate(node_type* needle);
 
-	slab_allocator<node_type> m_slab;
-	allocator &m_alloc;
+	kutil::slab_allocator<node_type> m_slab;
+	kutil::allocator &m_alloc;
 	tree_type m_ranges;
 };
-
-} // namespace kutil

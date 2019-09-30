@@ -38,6 +38,7 @@ modules:
             - src/kernel/msr.cpp
             - src/kernel/objects/handle.cpp
             - src/kernel/objects/kobject.cpp
+            - src/kernel/objects/vm_space.cpp
             - src/kernel/page_manager.cpp
             - src/kernel/pci.cpp
             - src/kernel/process.cpp
@@ -105,7 +106,6 @@ modules:
             - src/libraries/kutil/logger.cpp
             - src/libraries/kutil/memory.cpp
             - src/libraries/kutil/printf.c
-            - src/libraries/kutil/vm_space.cpp
 
     makerd:
         kind: exe

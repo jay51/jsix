@@ -2,12 +2,12 @@
 #include <utility>
 
 #include "kutil/assert.h"
-#include "kutil/vm_space.h"
 
 #include "frame_allocator.h"
 #include "io.h"
 #include "kernel_heap.h"
 #include "log.h"
+#include "objects/vm_space.h"
 #include "page_manager.h"
 
 using memory::frame_size;
@@ -16,7 +16,7 @@ using memory::kernel_max_heap;
 using memory::kernel_offset;
 using memory::page_offset;
 
-kutil::vm_space g_kspace;
+vm_space g_kspace;
 bool g_memory_initialized = false;
 
 enum class efi_memory_type : uint32_t
@@ -113,7 +113,7 @@ public:
 		}
 	}
 
-	void add_used_frames(kutil::vm_space &vm) {
+	void add_used_frames(vm_space &vm) {
 		for (auto *desc : map) {
 			if (desc->type == efi_memory_type::jsix_data ||
 				desc->type == efi_memory_type::jsix_initrd ||
@@ -216,7 +216,7 @@ memory_initialize(uint16_t scratch_pages, const void *memory_map, size_t map_len
 	bootstrap.add_free_frames(*fa);
 
 	new (&g_kernel_heap) kutil::heap_allocator(heap_start, kernel_max_heap);
-	new (&g_kspace) kutil::vm_space(kernel_offset, (page_offset-kernel_offset), g_kernel_heap);
+	new (&g_kspace) vm_space(kernel_offset, (page_offset-kernel_offset), g_kernel_heap);
 	bootstrap.add_used_frames(g_kspace);
 
 	// Create the page manager

@@ -1,10 +1,10 @@
 #include <algorithm>
 
 #include "kutil/assert.h"
-#include "kutil/vm_space.h"
 #include "console.h"
 #include "io.h"
 #include "log.h"
+#include "objects/vm_space.h"
 #include "page_manager.h"
 
 using memory::frame_size;
@@ -15,7 +15,7 @@ using memory::page_offset;
 using memory::page_mappable;
 
 page_manager g_page_manager(g_frame_allocator);
-extern kutil::vm_space g_kspace;
+extern vm_space g_kspace;
 
 // NB: in 4KiB page table entries, bit 7 isn't pagesize but PAT. Currently this
 // doesn't matter, becasue in the default PAT table, both 000 and 100 are WB.
@@ -323,7 +323,7 @@ page_manager::fault_handler(uintptr_t addr)
 		return false;
 
 	if (m_memory_initialized &&
-		g_kspace.get(addr) != kutil::vm_state::committed)
+		g_kspace.get(addr) != vm_state::committed)
 		return false;
 
 	uintptr_t page = addr & ~0xfffull;

@@ -1,14 +1,13 @@
 #include <algorithm>
-#include "kutil/logger.h"
-#include "kutil/vector.h"
-#include "kutil/vm_space.h"
 
-namespace kutil {
+#include "kutil/vector.h"
+#include "log.h"
+#include "objects/vm_space.h"
 
 using node_type = kutil::avl_node<vm_range>;
 using node_vec = kutil::vector<node_type*>;
 
-vm_space::vm_space(uintptr_t start, size_t size, allocator &alloc) :
+vm_space::vm_space(uintptr_t start, size_t size, kutil::allocator &alloc) :
 	m_slab(alloc),
 	m_alloc(alloc)
 {
@@ -23,8 +22,8 @@ vm_space::vm_space(uintptr_t start, size_t size, allocator &alloc) :
 }
 
 vm_space::vm_space() :
-	m_slab(allocator::invalid),
-	m_alloc(allocator::invalid)
+	m_slab(kutil::allocator::invalid),
+	m_alloc(kutil::allocator::invalid)
 {
 }
 
@@ -202,4 +201,3 @@ vm_space::get(uintptr_t addr)
 	return node ? node->state : vm_state::unknown;
 }
 
-} // namespace kutil
